@@ -36,6 +36,7 @@ public class GameTable extends JPanel
         
         this.setBackground(Color.BLUE);
         this.setOpaque(false);
+        this.setVisible(true);
         
         handTotalFont = new Font("Serif", Font.PLAIN, 96);
         playerNameFont = new Font("Serif", Font.ITALIC, 20);

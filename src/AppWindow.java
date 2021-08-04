@@ -16,8 +16,8 @@ public class AppWindow extends JFrame
     private GamePanel gamePanel;
     private Color defaultTableColour = new Color(6, 120, 0);
     
-    private JMenuItem savePlayer = new JMenuItem("Save Current Player");
-    private JMenuItem openPlayer = new JMenuItem("Open Existing Player");
+    private JMenuItem savePlayer = new JMenuItem("Salvar perfil atual");
+    private JMenuItem openPlayer = new JMenuItem("Abrir perfil existente");
     
     final int WIDTH = 600;
     final int HEIGHT = 500;
@@ -30,6 +30,10 @@ public class AppWindow extends JFrame
         
         Dimension windowSize = new Dimension(WIDTH, HEIGHT);
         setSize(windowSize);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //! deixa o app sem barra
+        //setUndecorated(true);
+        setVisible(true);
         setLocationRelativeTo(null); // put game in centre of screen
         
         this.setBackground(defaultTableColour);
@@ -40,30 +44,30 @@ public class AppWindow extends JFrame
         JMenuBar menuBar = new JMenuBar();
         
         JMenu playerMenu = new JMenu("Player");
-        JMenuItem updatePlayerDetails = new JMenuItem("Update Player Details");
+        JMenuItem updatePlayerDetails = new JMenuItem("Atualizar detalhes do perfil");
         playerMenu.add(updatePlayerDetails);
         playerMenu.addSeparator();
         playerMenu.add(savePlayer);
         playerMenu.add(openPlayer);
         menuBar.add(playerMenu);
         
-        JMenu actionMenu = new JMenu("Actions");
-        JMenuItem dealAction = new JMenuItem("Deal");
-        JMenuItem hitAction = new JMenuItem("Hit");
-        JMenuItem doubleAction = new JMenuItem("Double");
-        JMenuItem standAction = new JMenuItem("Stand");
+        JMenu actionMenu = new JMenu("Ações");
+        JMenuItem dealAction = new JMenuItem("Dar as cartas");
+        JMenuItem hitAction = new JMenuItem("Comprar uma carta");
+        JMenuItem doubleAction = new JMenuItem("Dobrar aposta");
+        JMenuItem standAction = new JMenuItem("Mostrar as cartas");
         actionMenu.add(dealAction);
         actionMenu.add(hitAction);
         actionMenu.add(doubleAction);
         actionMenu.add(standAction);
         menuBar.add(actionMenu);
         
-        JMenu betMenu = new JMenu("Bet");
-        JMenuItem oneChip = new JMenuItem("$1");
-        JMenuItem fiveChip = new JMenuItem("$5");
-        JMenuItem tenChip = new JMenuItem("$10");
-        JMenuItem twentyFiveChip = new JMenuItem("$25");
-        JMenuItem hundredChip = new JMenuItem("$100");
+        JMenu betMenu = new JMenu("Apostar");
+        JMenuItem oneChip = new JMenuItem("R$ 1");
+        JMenuItem fiveChip = new JMenuItem("R$ 5");
+        JMenuItem tenChip = new JMenuItem("R$ 10");
+        JMenuItem twentyFiveChip = new JMenuItem("R$ 25");
+        JMenuItem hundredChip = new JMenuItem("R$ 100");
         betMenu.add(oneChip);
         betMenu.add(fiveChip);
         betMenu.add(tenChip);
@@ -71,14 +75,14 @@ public class AppWindow extends JFrame
         betMenu.add(hundredChip);
         menuBar.add(betMenu);
         
-        JMenu windowMenu = new JMenu("Window");
-        JMenuItem windowTableColourMenu = new JMenuItem("Change Table Colour");
+        JMenu windowMenu = new JMenu("Preferências");
+        JMenuItem windowTableColourMenu = new JMenuItem("Mudar a cor da mesa");
         windowMenu.add(windowTableColourMenu);
         menuBar.add(windowMenu);
         
-        JMenu helpMenu = new JMenu("Help");
-        JMenuItem helpBlackjackRulesMenu = new JMenuItem("Blackjack Rules");
-        JMenuItem helpAboutMenu = new JMenuItem("About Blackjack");
+        JMenu helpMenu = new JMenu("Ajuda");
+        JMenuItem helpBlackjackRulesMenu = new JMenuItem("Regras do Blackjack");
+        JMenuItem helpAboutMenu = new JMenuItem("Sobre Blackjack Java");
         helpMenu.add(helpBlackjackRulesMenu);
         helpMenu.addSeparator();
         helpMenu.add(helpAboutMenu);
@@ -153,65 +157,65 @@ public class AppWindow extends JFrame
     {
         String act = evt.getActionCommand();
         
-        if (act.equals("$1"))
+        if (act.equals("R$ 1"))
         {
             gamePanel.increaseBet(1);
         }
-        else if (act.equals("$5"))
+        else if (act.equals("R$ 5"))
         {
             gamePanel.increaseBet(5);
         }
-        else if (act.equals("$10"))
+        else if (act.equals("R$ 10"))
         {
             gamePanel.increaseBet(10);
         }
-        else if (act.equals("$25"))
+        else if (act.equals("R$ 25"))
         {
             gamePanel.increaseBet(25);
         }
-        else if (act.equals("$100"))
+        else if (act.equals("R$ 100"))
         {
             gamePanel.increaseBet(100);
         }
-        else if (act.equals("Deal"))
+        else if (act.equals("Dar as cartas"))
         {
             gamePanel.newGame();
         }
-        else if (act.equals("Hit"))
+        else if (act.equals("Comprar uma carta"))
         {
             gamePanel.hit();
         }
-        else if (act.equals("Double"))
+        else if (act.equals("Dobrar aposta"))
         {
             gamePanel.playDouble();
         }
-        else if (act.equals("Stand"))
+        else if (act.equals("Mostrar as cartas"))
         {
             gamePanel.stand();
         }
-        else if (act.equals("Update Player Details"))
+        else if (act.equals("Atualizar detalhes do perfil"))
         {
             gamePanel.updatePlayer();
         }
-        else if (act.equals("Save Current Player"))
+        else if (act.equals("Salvar perfil atual"))
         {
             gamePanel.savePlayer();
         }
-        else if (act.equals("Open Existing Player"))
+        else if (act.equals("Abrir perfil existente"))
         {
             gamePanel.openPlayer();
         }
-		else if (act.equals("Change Table Colour"))
+		else if (act.equals("Mudar a cor da mesa"))
 		{
-		    Color tableColour = JColorChooser.showDialog(this, "Select Table Colour", defaultTableColour);
+		    Color tableColour = JColorChooser.showDialog(this, "Selecione a cor da mesa", defaultTableColour);
 		    this.setBackground(tableColour);
 		    gamePanel.setBackground(tableColour);
 		    gamePanel.repaint();
 		    this.repaint();
 		}
-		else if (act.equals("About Blackjack"))
+		else if (act.equals("Sobre Blackjack Java"))
 		{
-		    String aboutText = "<html><p align=\"center\" style=\"padding-bottom: 10px;\">Written by David Winter &copy; 2006<br>Version 1.0</p><p align=\"center\" style=\"padding-bottom: 10px;\"><small>Become such an expert while developing this, <br>I won $1000 online in a game of Blackjack!</small></p><p align=\"center\">email: djw@davidwinter.me.uk<br>web: davidwinter.me.uk</p></html>";
+		    String aboutText = "<html><p align=\"center\" style=\"padding-bottom: 10px;\">Written by David Winter &copy; 2006<br>Version 1.1</p><p align=\"center\" style=\"padding-bottom: 10px;\"><small>Torne-se um especialista enquanto desenvolve isso, ganhe 1000 dólares online em um jogo de Blackjack!</small></p><p align=\"center\">email: djw@davidwinter.me.uk<br>web: davidwinter.me.uk</p></html>";
 		    JOptionPane.showMessageDialog(this, aboutText, "About Blackjack", JOptionPane.PLAIN_MESSAGE);
 		}
 		
