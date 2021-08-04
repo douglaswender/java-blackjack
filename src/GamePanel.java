@@ -16,21 +16,21 @@ public class GamePanel extends JPanel implements ActionListener
     
     private GameTable table;
     
-    private JButton newGameButton = new JButton("Deal");
-    private JButton hitButton = new JButton("Hit");
-    private JButton doubleButton = new JButton("Double");
-	private JButton standButton = new JButton("Stand");
-    private JButton add1Chip = new JButton("1");
-    private JButton add5Chip = new JButton("5");
-    private JButton add10Chip = new JButton("10");
-    private JButton add25Chip = new JButton("25");
-    private JButton add100Chip = new JButton("100");
-    private JButton clearBet =  new JButton("Clear");
+    private JButton newGameButton = new JButton("Dar as cartas");
+    private JButton hitButton = new JButton("Comprar uma carta");
+    private JButton doubleButton = new JButton("Dobrar aposta");
+	private JButton standButton = new JButton("Mostrar as cartas");
+    private JButton add1Chip = new JButton("R$ 1");
+    private JButton add5Chip = new JButton("R$ 5");
+    private JButton add10Chip = new JButton("R$ 10");
+    private JButton add25Chip = new JButton("R$ 25");
+    private JButton add100Chip = new JButton("R$ 100");
+    private JButton clearBet =  new JButton("Limpar");
     
-    private JLabel currentBet = new JLabel("Please set your bet...");
+    private JLabel currentBet = new JLabel("Por favor, aposte...");
     private JLabel playerWallet = new JLabel("$999.99");
-    private JLabel cardsLeft = new JLabel("Cards left...");
-    private JLabel dealerSays = new JLabel("Dealer says...");
+    private JLabel cardsLeft = new JLabel("Cartas restantes...");
+    private JLabel dealerSays = new JLabel("Dealer diz...");
     
     public GamePanel()
     {
@@ -86,16 +86,16 @@ public class GamePanel extends JPanel implements ActionListener
 		add100Chip.addActionListener(this);
 
 		// tool tips
-		newGameButton.setToolTipText("Deal a new game.");
-		hitButton.setToolTipText("Request another card.");
-		doubleButton.setToolTipText("Double your bet, and receive another card.");
-		standButton.setToolTipText("Stand with your card-hand.");
-        clearBet.setToolTipText("Clear your current bet.");
-        add1Chip.setToolTipText("Add a $1 chip to your current bet.");
-        add5Chip.setToolTipText("Add a $5 chip to your current bet.");
-        add10Chip.setToolTipText("Add a $10 chip to your current bet.");
-        add25Chip.setToolTipText("Add a $25 chip to your current bet.");
-        add100Chip.setToolTipText("Add a $100 chip to your current bet.");
+		newGameButton.setToolTipText("Da início ao jogo");
+		hitButton.setToolTipText("Solicita outra carta.");
+		doubleButton.setToolTipText("Dobra sua aposta e recebe outra carta.");
+		standButton.setToolTipText("Mostra as cartas em sua mão.");
+        clearBet.setToolTipText("Limpa sua aposta atual.");
+        add1Chip.setToolTipText("Adiciona R$ 1 a sua aposta atual.");
+        add5Chip.setToolTipText("Adiciona R$ 5 a sua aposta atual.");
+        add10Chip.setToolTipText("Adiciona R$ 10 a sua aposta atual.");
+        add25Chip.setToolTipText("Adiciona R$ 25 a sua aposta atual.");
+        add100Chip.setToolTipText("Adiciona R$ 100 a sua aposta atual.");
 		
 		dealer = new Dealer();
         player = new Player("James Bond", 32, "Male");
@@ -108,27 +108,28 @@ public class GamePanel extends JPanel implements ActionListener
     {
         String act = evt.getActionCommand();
         
-        if (act.equals("Deal"))
+        if (act.equals("Dar as cartas"))
         {
             newGame();
         }
-        else if (act.equals("Hit"))
+        else if (act.equals("Comprar uma carta"))
         {
             hit();
         }
-        else if (act.equals("Double"))
+        else if (act.equals("Dobrar aposta"))
         {
             playDouble();
         }
-        else if (act.equals("Stand"))
+        else if (act.equals("Mostrar as cartas"))
         {
             stand();
         }
-        else if (act.equals("1") || act.equals("5") || act.equals("10") || act.equals("25") || act.equals("100"))
+        else if (act.equals("R$ 1") || act.equals("R$ 5") || act.equals("R$ 10") || act.equals("R$ 25") || act.equals("R$ 100"))
         {
-            increaseBet(Integer.parseInt(act));
+            System.out.println(act.split(" ")[1]);
+            increaseBet(Integer.parseInt(act.split(" ")[1]));
         }
-        else if (act.equals("Clear"))
+        else if (act.equals("Limpar"))
         {
             System.out.println("clear bet");
             clearBet();
@@ -159,6 +160,7 @@ public class GamePanel extends JPanel implements ActionListener
     
     public void increaseBet(int amount)
     {
+        System.out.println(amount);
         dealer.acceptBetFrom(player, amount + player.getBet());
     }
     
@@ -169,7 +171,7 @@ public class GamePanel extends JPanel implements ActionListener
     
     public void updateValues()
     {
-        dealerSays.setText("<html><p align=\"center\"><font face=\"Serif\" color=\"white\" style=\"font-size: 20pt\">" + dealer.says() + "</font></p></html>");
+        dealerSays.setText("<html><p align=\"center\"><font face=\"Serif\" color=\"white\" style=\"font-size: 24px\">" + dealer.says() + "</font></p></html>");
         
         if (dealer.isGameOver())
         {
@@ -267,7 +269,7 @@ public class GamePanel extends JPanel implements ActionListener
 		table.setNames(dealer.getName(), player.getName());
         table.repaint();
         
-        cardsLeft.setText("Deck: " + dealer.cardsLeftInPack() + "/" + (dealer.CARD_PACKS * Cards.CardPack.CARDS_IN_PACK));
+        cardsLeft.setText("Baralho: " + dealer.cardsLeftInPack() + "/" + (dealer.CARD_PACKS * Cards.CardPack.CARDS_IN_PACK));
         
         if (player.isBankrupt())
         {
@@ -275,17 +277,17 @@ public class GamePanel extends JPanel implements ActionListener
         }
         
         // redraw bet
-        currentBet.setText(Double.toString(player.getBet()));
-        playerWallet.setText(Double.toString(player.getWallet()));
+        currentBet.setText("Valor apostado: R$ "+Double.toString(player.getBet()));
+        playerWallet.setText("Sua carteira: R$ "+Double.toString(player.getWallet()));
     }
     
     private void moreFunds()
     {
-        int response = JOptionPane.showConfirmDialog(null, "Marshall Aid. One Hundred dollars. With the compliments of the USA.", "Out of funds", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "Marshall Aid. Mil dólares. Com os cumprimentos dos EUA.", "Acabou o dinheiro", JOptionPane.YES_NO_OPTION);
         
         if (response == JOptionPane.YES_OPTION)
         {
-            player.setWallet(100.00);
+            player.setWallet(1000.00);
             updateValues();
         }
     }
@@ -317,7 +319,7 @@ public class GamePanel extends JPanel implements ActionListener
 	    }
 	    else
 	    {
-	        JOptionPane.showMessageDialog(this, "Can't save a player while a game is in progress.", "Error", JOptionPane.ERROR_MESSAGE);
+	        JOptionPane.showMessageDialog(this, "Não é possível salvar o perfil enquauto o jogo está acontecendo!", "Error", JOptionPane.ERROR_MESSAGE);
 	    }
 	    
 	}
@@ -356,13 +358,13 @@ public class GamePanel extends JPanel implements ActionListener
 	    }
 	    else
 	    {
-	        JOptionPane.showMessageDialog(this, "Can't open an existing player while a game is in progress.", "Error", JOptionPane.ERROR_MESSAGE);
+	        JOptionPane.showMessageDialog(this, "Não é possível abrir outro perfil enquanto o jogo está em progresso.", "Erro!", JOptionPane.ERROR_MESSAGE);
 	    }
 	}
 	
 	public void updatePlayer()
 	{
-	    PlayerDialog playerDetails = new PlayerDialog(null, "Player Details", true, player);
+	    PlayerDialog playerDetails = new PlayerDialog(null, "Detalhes do jogador", true, player);
         playerDetails.setVisible(true);
         
         player = playerDetails.getPlayer();

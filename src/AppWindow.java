@@ -28,13 +28,9 @@ public class AppWindow extends JFrame
         
         addComponentListener(this);
         
-        Dimension windowSize = new Dimension(WIDTH, HEIGHT);
-        setSize(windowSize);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        //! deixa o app sem barra
-        //setUndecorated(true);
         setVisible(true);
-        setLocationRelativeTo(null); // put game in centre of screen
+        setResizable(true);
+        setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
         
         this.setBackground(defaultTableColour);
         
@@ -43,7 +39,7 @@ public class AppWindow extends JFrame
         // menu bar
         JMenuBar menuBar = new JMenuBar();
         
-        JMenu playerMenu = new JMenu("Player");
+        JMenu playerMenu = new JMenu("Jogador");
         JMenuItem updatePlayerDetails = new JMenuItem("Atualizar detalhes do perfil");
         playerMenu.add(updatePlayerDetails);
         playerMenu.addSeparator();

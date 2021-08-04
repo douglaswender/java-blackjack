@@ -37,7 +37,7 @@ public class Dealer extends BlackjackPlayer
      */
     private boolean playerCanDouble = true;
     
-    private String said = "Please place your wager.";
+    private String said = "Por favor, aposte.";
     
     /**
      * Default constructor that creates a new dealer with a deck of
