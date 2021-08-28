@@ -29,8 +29,8 @@ public class AppWindow extends JFrame
         addComponentListener(this);
         
         setResizable(true);
-        setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
+        setExtendedState(MAXIMIZED_BOTH);
 
         this.setBackground(defaultTableColour);
         
